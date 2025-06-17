@@ -65,9 +65,11 @@
                             <td>{{ $packing->billing_date }}</td>
                             <td><span @if($packing->status == 'approved') class="btn btn-success" @else class="btn btn-warning" @endif>{{ $packing->status }}</span></td>
                             <td>
+                                @if($packing->status == 'approved')
                                 <a class="dropdown-item viewDetails" href="javascript:void(0);" data-value="{{ $packing->pakingDetails }}" data-id="{{ $packing->id }}" data-party="{{ $packing->customer }}">
                                     <i class="bx bx-edit-alt me-1"></i> View
                                 </a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('admin.report.pdf', ['id' => $packing->id]) }}" target="_blank">
                                     <i class="bx bx-trash me-1"></i> PDF
                                 </a>

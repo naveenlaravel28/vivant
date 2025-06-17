@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
     <style>
-        body { font-family: Arial, sans-serif; }
+        body { font-family: Arial, sans-serif; font-size: 12px; }
         .invoice-box {
             width: 100%;
             border: 1px solid #eee;
@@ -13,12 +13,18 @@
         }
         h2 { text-align: center; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        table, th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        table, th, td { font-size: 12px; border: 1px solid black; padding: 8px; text-align: center; }
         .text-right { text-align: right; }
-        thead { display: table-row-group; }
+        thead { 
+          display: table-row-group;
+          color: #082060;
+        }
         .bold-row {
             font-weight: bold;
             background-color: #f8f9fa;
+        }
+        .total-body {
+          background-color: lightgreen;
         }
     </style>
 </head>
@@ -57,7 +63,8 @@
                     <th colspan="4" style="text-align: center; font-weight: bold;">Date: {{ \Carbon\Carbon::parse($packing->billing_date)->format('d-m-Y') }}</th>
                 </tr>
             </thead>
-            @foreach($pakingDetails as $details)
+            @foreach($pakingDetails as $row)
+            @foreach($row as $details)
             @php
                 $count = 0;
                 $pcs = 0;
@@ -71,7 +78,7 @@
                     <th>Alloy & Temper</th>
                     <th>Lot No</th>
                     <th>Surface Finish</th>
-                    <th>Weight</th>
+                    <th>Weight in Kgs</th>
                     <th>Pcs</th>
                     <th>Packaging Date</th>
                 </tr>
@@ -103,24 +110,14 @@
                 <tr class="bold-row">
                     <td></td>
                     <td colspan="5">Sub Total</td>
-                    <td>{{ $weight }}</td>
-                    <td>{{ $pcs }}</td>
+                    <td style="background-color: yellow">{{ $weight }}</td>
+                    <td style="background-color: yellow">{{ $pcs }}</td>
                     <td></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
                 </tr>
             </tbody>
             @endforeach
-            <tbody>
+            @endforeach
+            <tbody class="total-body">
                 <tr>
                     <td colspan="9" style="text-align: center; font-weight: bold;">Total</td>
                 </tr>

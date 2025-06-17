@@ -26,7 +26,7 @@ $(document).ready(function () {
 	$(document).on('click', '#scan-btn', function() {
 
 		$("#scan-btn").attr("disabled", true);
-		var result = scanText.decodedText;
+		var result = scanText;
 		var data = result.split("|");
 
 		if ((data.length - 1) === 7) {
@@ -89,6 +89,30 @@ $(document).ready(function () {
 
         // Remove row from DOM
         row.remove();
+
+        // Reorder the index numbers and data-id
+	    $('#scan-data tr').each(function (index) {
+	        $(this).attr('data-id', 'new_' + (index + 1)); // Update data-id
+	        $(this).find('td:first').text(index + 1);       // Update index number in first <td>
+	    });
+
+	    // Also update the IDs in localStorage
+	    let updatedTableData = [];
+	    $('#scan-data tr').each(function (index) {
+	        let tds = $(this).find('td');
+	        updatedTableData.push({
+	            id: 'new_' + (index + 1),
+	            section_no: tds.eq(1).text(),
+	            cut_length: tds.eq(2).text(),
+	            alloy: tds.eq(3).text(),
+	            lot_no: tds.eq(4).text(),
+	            surface: tds.eq(5).text(),
+	            weight: tds.eq(6).text(),
+	            pcs: tds.eq(7).text(),
+	            pack_date: tds.eq(8).text()
+	        });
+	    });
+	    localStorage.setItem('tableData', JSON.stringify(updatedTableData));
     });
 
 	$(document).on('click', '#save_records', function() {
@@ -178,11 +202,28 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click', '#reset_records', function() {
-		$("#reset_records").attr("disabled", true);
-		localStorage.removeItem('tableData');
-		localStorage.removeItem('page_local');
-		$('#scan-data').html('');
-		$("#reset_records").attr("disabled", false);
+		Swal.fire({
+			title: "Are you sure?",
+		  	text: "You can be able to revert this, when page load!",
+		  	icon: "warning",
+		  	showCancelButton: true,
+		  	confirmButtonColor: "#3085d6",
+		  	cancelButtonColor: "#d33",
+		  	confirmButtonText: "Yes, reset it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#reset_records").attr("disabled", true);
+				localStorage.removeItem('tableData');
+				localStorage.removeItem('page_local');
+				$('#scan-data').html('');
+				$("#reset_records").attr("disabled", false);
+		    	Swal.fire({
+		      		title: "Reseted!",
+		      		text: "Your packing list has been reseted.",
+		      		icon: "success"
+		    	});
+		  	}
+		});
 	});
 	// Scanner Data updates
 	

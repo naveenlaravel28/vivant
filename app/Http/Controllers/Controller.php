@@ -46,7 +46,7 @@ class Controller extends BaseController
             $financialYear .= '/'.$master->from.'/'.$master->to;
         }
 
-        $financialYear .= '/DC';
+        // $financialYear .= '/DC';
 
         $financialYear .= '/'.self::generateNumber(new Packing, 'pl_no', $financialYear, $master->starting_number);
 

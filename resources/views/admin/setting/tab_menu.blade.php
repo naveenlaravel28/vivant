@@ -2,11 +2,11 @@
   <li class="nav-item">
     <a class="nav-link {{ Request::is('admin/setting/account') ? 'active' : '' }}" href="{{ route('admin.setting.account') }}"><i class="bx bx-user me-1"></i> Account</a>
   </li>
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link {{ Request::is('admin/setting/dc-master') ? 'active' : '' }}" href="{{ route('admin.setting.dc-master') }}"
       ><i class="bx bx-bell me-1"></i> DC Master</a
     >
-  </li>
+  </li> -->
   <li class="nav-item">
     <a class="nav-link {{ Request::is('admin/setting/site') ? 'active' : '' }}" href="{{ route('admin.setting.site') }}"><i class="bx bx-user me-1"></i> Site</a>
   </li>

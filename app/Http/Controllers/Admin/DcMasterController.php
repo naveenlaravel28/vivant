@@ -42,8 +42,8 @@ class DcMasterController extends Controller
         $validator = Validator::make($request->all(), [
             'form_action' => 'required|in:add,edit',
             'dc_master_id' => 'required_if:form_action,edit|nullable|exists:dc_masters,id',
-            'from' => 'required|string|min:3|max:3',
-            'to' => 'required|string|min:3|max:3',
+            'from' => 'required|string|min:1|max:10',
+            'to' => 'required|string|min:1|max:10',
             'starting_number' => 'required|numeric|digits_between:1,10',
         ]);
 

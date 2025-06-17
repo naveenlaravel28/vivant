@@ -118,6 +118,7 @@
             </div>
             <div class="modal-body">
                 <div id="reader"></div>
+                <select id="camera-select" class="form-control mb-3"></select>
                 <div id="result">Scan result will appear here</div>
             </div>
             <div class="modal-footer">

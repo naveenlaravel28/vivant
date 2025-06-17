@@ -42,11 +42,12 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'form_action' => 'required|in:add,edit',
             'customer_id' => 'required_if:form_action,edit|nullable|exists:customers,id',
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'required|email',
-            'mobile' => 'required|numeric|digits_between:7,15',
-            'address' => 'required'
+            'company_name' => 'nullable|string|max:50',
+            'contact_name' => 'nullable|string|max:50',
+            'contact_email' => 'nullable|email',
+            'contact_mobile' => 'nullable|numeric|digits_between:7,15',
+            'gst_no' => 'nullable',
+            'address' => 'nullable'
         ]);
 
         if ($validator->fails()) {
@@ -62,11 +63,12 @@ class CustomerController extends Controller
             $customer->created_by = auth()->user()->id;
         }
 
-        $customer->first_name = $request->first_name;
-        $customer->last_name = $request->last_name;
-        $customer->email = $request->email;
-        $customer->mobile = $request->mobile;
+        $customer->company_name = $request->company_name;
+        $customer->contact_name = $request->contact_name;
+        $customer->contact_email = $request->email;
+        $customer->contact_mobile = $request->mobile;
         $customer->address = $request->address;
+        $customer->gst_no = $request->gst_no;
         $customer->save();
 
         if($request->form_action == 'edit') {

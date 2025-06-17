@@ -87,10 +87,12 @@ class ReportController extends Controller
         }
 
         $packing = Packing::with(['pakingDetails', 'customer'])->find($id);
-        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy('section_no');
+        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy(['section_no','cut_length']);
         $customer = Customer::find($packing->customer_id);
         $admin = User::where('role', 'admin')->first();
         $logo = !blank(setting('site_logo')) ? storage_path('app/public/'.setting('site_logo')) : public_path('site/assets/images/logo.png');
+        // echo "<pre>";
+        // print_r($pakingDetails->toArray());die();
 
         // Load the Blade view
         $pdf = Pdf::loadView('admin.report.pdf', compact('packing', 'pakingDetails', 'customer', 'admin', 'logo'));
@@ -112,7 +114,7 @@ class ReportController extends Controller
         }
 
         $packing = Packing::with(['pakingDetails', 'customer'])->find($id);
-        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy('section_no');
+        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy(['section_no','cut_length']);
         $customer = Customer::find($packing->customer_id);
         $admin = User::where('role', 'admin')->first();
         $logo = !blank(setting('site_logo')) ? storage_path('app/public/'.setting('site_logo')) : public_path('site/assets/images/logo.png');
@@ -144,7 +146,7 @@ class ReportController extends Controller
         }
 
         $packing = Packing::with(['pakingDetails', 'customer'])->find($id);
-        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy('section_no');
+        $pakingDetails = PackingDetail::where('packing_id', $packing->id)->get()->groupBy(['section_no','cut_length']);
         $customer = Customer::find($packing->customer_id);
         $admin = User::where('role', 'admin')->first();
         $logo = !blank(setting('site_logo')) ? storage_path('app/public/'.setting('site_logo')) : public_path('site/assets/images/logo.png');

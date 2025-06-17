@@ -78,8 +78,8 @@ class HomeController extends Controller
             $packingDetail->alloy = $row->alloy;
             $packingDetail->lot_no = $row->lot_no;
             $packingDetail->surface = $row->surface;
-            $packingDetail->weight = preg_replace('/[^0-9]/', '', $row->weight);
-            $packingDetail->pcs = preg_replace('/[^0-9]/', '', $row->pcs);
+            $packingDetail->weight = $row->weight;
+            $packingDetail->pcs = $row->pcs;
             $packingDetail->pack_date = $row->pack_date;
             $packingDetail->save();
         }
@@ -126,21 +126,23 @@ class HomeController extends Controller
         $packing->save();
 
         $packingData = json_decode($request->packing_data);
+        PackingDetail::where('packing_id', $packing->id)->delete();
         foreach ($packingData as $row) {
-            $packingDetail = PackingDetail::find($row->id);
-            if(!$packingDetail) {
-                $packingDetail = new PackingDetail();
-                $packingDetail->packing_id = $packing->id;
-                $packingDetail->section_no = $row->section_no;
-                $packingDetail->cut_length = $row->cut_length;
-                $packingDetail->alloy = $row->alloy;
-                $packingDetail->lot_no = $row->lot_no;
-                $packingDetail->surface = $row->surface;
-                $packingDetail->weight = preg_replace('/[^0-9]/', '', $row->weight);
-                $packingDetail->pcs = preg_replace('/[^0-9]/', '', $row->pcs);
-                $packingDetail->pack_date = $row->pack_date;
-                $packingDetail->save();
-            }
+            // $packingDetail = PackingDetail::find($row->id);
+            // if(!$packingDetail) {
+                
+            // }
+            $packingDetail = new PackingDetail();
+            $packingDetail->packing_id = $packing->id;
+            $packingDetail->section_no = $row->section_no;
+            $packingDetail->cut_length = $row->cut_length;
+            $packingDetail->alloy = $row->alloy;
+            $packingDetail->lot_no = $row->lot_no;
+            $packingDetail->surface = $row->surface;
+            $packingDetail->weight = $row->weight;
+            $packingDetail->pcs = $row->pcs;
+            $packingDetail->pack_date = $row->pack_date;
+            $packingDetail->save();
         }
 
         return self::sentResponse(200, [], 'Records updated successfully!');

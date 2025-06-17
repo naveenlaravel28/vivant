@@ -183,13 +183,13 @@
             rules: {
                 from: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 3
+                    minlength: 1,
+                    maxlength: 10
                 },
                 to: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 3
+                    minlength: 1,
+                    maxlength: 10
                 },
                 starting_number: {
                     required: true,
